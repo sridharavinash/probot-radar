@@ -44,6 +44,6 @@ module.exports = (robot) => {
 
     config = Object.assign(config, {owner, repo, logger: robot.log});
 
-    return new Radar(github, config);
+    return new radar(github, config);
   }
 };
