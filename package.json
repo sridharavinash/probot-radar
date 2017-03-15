@@ -1,0 +1,17 @@
+{
+  "name": "probot-radar",
+  "version": "1.0.0",
+  "description": "Probot that creates team specfic radars.",
+  "author": "sridharavinash",
+  "private": true,
+  "scripts": {
+    "start": "probot ./index.js"
+  },
+  "dependencies": {
+    "probot": "probot/probot"
+  },
+  "engines": {
+    "node": ">= 7.7.0",
+    "npm": ">= 4.0.0"
+  }
+}
