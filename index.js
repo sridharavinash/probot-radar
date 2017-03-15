@@ -24,7 +24,6 @@ module.exports = (robot) => {
      // TODO: Pagination
      const data = await github.integrations.getInstallationRepositories({});
      return data.repositories.map(async repo => {
-       robot.log.info("repo:" , repo)
        const radar = await forRepository(github, repo);
        return radar.getIssues();
      });
@@ -42,9 +41,8 @@ module.exports = (robot) => {
     } catch (err) {
       config = {};
     }
-
     config = Object.assign(config, {owner, repo, logger: robot.log});
-
-    return new radar(github, config);
+    robot.log("config:", config)
+    return new Radar(github, config);
   }
 };
