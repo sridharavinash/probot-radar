@@ -2,12 +2,13 @@
   "name": "probot-radar",
   "version": "1.0.0",
   "description": "Probot that creates team specfic radars.",
-  "author": "sridharavinash",
+  "author": "Avinash Sridhar",
   "private": true,
   "scripts": {
     "start": "probot ./index.js"
   },
   "dependencies": {
+    "js-yaml": "^3.8.2",
     "probot": "probot/probot"
   },
   "engines": {
