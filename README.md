@@ -1,6 +1,6 @@
-# {{ name }}
+# probot-radar
 
-> a GitHub Integration built with [probot](https://github.com/probot/probot) that {{ description }}
+> a GitHub Integration built with [probot](https://github.com/probot/probot) that creates status update issues (radars).
 
 ## Setup
 
