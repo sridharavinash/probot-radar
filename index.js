@@ -1,9 +1,6 @@
 const yaml = require('js-yaml');
 const Radar = require('./lib/radar');
 
-// run this every 7 days?
-const INTERVAL = 60 * 60 * 1000;
-
 module.exports = (robot) => {
   check()
 
