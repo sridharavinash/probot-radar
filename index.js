@@ -24,6 +24,7 @@ module.exports = (robot) => {
      // TODO: Pagination
      const data = await github.integrations.getInstallationRepositories({});
      return data.repositories.map(async repo => {
+       robot.logger.info("repo:" + repo)
        const radar = await forRepository(github, repo);
        return radar.getIssues();
      });
