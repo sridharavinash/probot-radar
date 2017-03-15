@@ -1,7 +1,7 @@
 const yaml = require('js-yaml');
 const Radar = require('./lib/radar');
 
-// Check for stale issues every hour
+// run this every 7 days?
 const INTERVAL = 60 * 60 * 1000;
 
 module.exports = (robot) => {
@@ -42,7 +42,6 @@ module.exports = (robot) => {
       config = {};
     }
     config = Object.assign(config, {owner, repo, logger: robot.log});
-    robot.log("config:", config)
     return new Radar(github, config);
   }
 };
