@@ -1,5 +1,5 @@
 const yaml = require('js-yaml');
-const Stale = require('./lib/radar');
+const Radar = require('./lib/radar');
 
 // Check for stale issues every hour
 const INTERVAL = 60 * 60 * 1000;
