@@ -25,7 +25,7 @@ module.exports = (robot) => {
      const data = await github.integrations.getInstallationRepositories({});
      return data.repositories.map(async repo => {
        const radar = await forRepository(github, repo);
-       return radar.getIssues();
+       return radar.getIssuesWithLabel();
      });
    }
 
