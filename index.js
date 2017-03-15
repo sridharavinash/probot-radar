@@ -5,9 +5,6 @@ const Radar = require('./lib/radar');
 const INTERVAL = 60 * 60 * 1000;
 
 module.exports = (robot) => {
-  // Your plugin code here
-  console.log('Yay, the plugin was loaded!');
-
   check()
 
   async function check() {
