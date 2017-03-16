@@ -24,7 +24,7 @@ module.exports = (robot) => {
          if(!coll_issues[label]){
            coll_issues[label] = issues;
          }else{
-           coll_issues[label] = issues.concat(issues);
+           coll_issues[label] = coll_issues.concat(issues);
          }
        });
      });
