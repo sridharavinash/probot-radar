@@ -17,9 +17,10 @@ module.exports = (robot) => {
      const github = await robot.auth(installation.id);
      // TODO: Pagination
      const data = await github.integrations.getInstallationRepositories({});
+     var issues = []
      return data.repositories.map(async repo => {
-       const radar = await forRepository(github, repo);
-       return radar.createRadarIssue();
+       const issues = await forRepository(github, repo);
+       return issues;
      });
    }
 
@@ -36,6 +37,8 @@ module.exports = (robot) => {
       config = {};
     }
     config = Object.assign(config, {owner, repo, logger: robot.log});
-    return new Radar(github, config);
+    var radar = new Radar(github, config);
+    const issues_for_repo = await radar.getIssuesWithLabel();
+    return issues_for_repo;
   }
 };
