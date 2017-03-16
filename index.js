@@ -20,6 +20,7 @@ module.exports = (robot) => {
      var issues = []
      return data.repositories.map(async repo => {
        const issues = await forRepository(github, repo);
+       robot.log.info(issues);
        return issues;
      });
    }
