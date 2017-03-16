@@ -17,14 +17,14 @@ module.exports = (robot) => {
      const github = await robot.auth(installation.id);
      // TODO: Pagination
      const data = await github.integrations.getInstallationRepositories({});
-     var coll_issues = {}
+     var coll_issues = {};
      await data.repositories.map(async repo => {
        const issues = await forRepository(github, repo);
        await Object.keys(issues).map(async (label) =>{
          if(!coll_issues[label]){
-           coll_issues[label] = issues;
+           coll_issues[label] = issues[label];
          }else{
-           coll_issues[label] = coll_issues.concat(issues);
+           coll_issues[label] = coll_issues[label].concat(issues[label]);
          }
        });
      });
