@@ -25,8 +25,12 @@ module.exports = (robot) => {
      }));
 
      var mergedIssues = await mergeIssueData(coll_issues);
-     var radar2 = new Radar(github, {});
-     robot.log.info(mergedIssues);
+
+     //HACK to get this to create a radar issue. Loses any yml set configs
+     var radar2 = new Radar(github, {logger: robot.log});
+
+     var body = await radar2.generateRadarIssueBody(mergedIssues);
+     robot.log.info(body);
      return mergedIssues;
    }
 
