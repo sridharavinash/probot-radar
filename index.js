@@ -7,7 +7,7 @@ const CHECK_INTERVAL = 60 * 60 * 1000 * 8;
 module.exports = (robot) => {
   check()
 
-  / Schedule interval to perform stale issue check
+  // Schedule check interval
   setInterval(check, CHECK_INTERVAL);
 
   async function check() {
