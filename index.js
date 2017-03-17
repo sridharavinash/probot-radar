@@ -16,12 +16,17 @@ module.exports = (robot) => {
   async function checkInstallation(installation) {
      const github = await robot.auth(installation.id);
      let config;
-
+     let radarOpen;
      const data = await github.integrations.getInstallationRepositories({});
 
      var coll_issues = [];
      coll_issues = await Promise.all(data.repositories.map(async repo => {
        var radar = await getRadarObj(github, repo);
+       radarOpen = await radar.isRadarIssueOpen();
+       if(radarOpen){
+         return;
+       }
+
        if(!config){
          config = await radar.getConfig();
        }
@@ -29,6 +34,9 @@ module.exports = (robot) => {
        return issues_for_repo;
      }));
 
+     if(radarOpen){
+       return 'Issue not created';
+     }
      var mergedIssues = await mergeIssueData(coll_issues);
      robot.log.info(config);
      //HACK to get this to create a radar issue. Loses any yml set configs
@@ -36,8 +44,7 @@ module.exports = (robot) => {
 
      var body = await radar2.generateRadarIssueBody(mergedIssues);
      var issue_created = await radar2.createRadarIssue(body);
-     robot.log.info(issue_created);
-     return body;
+     return issue_created.status;
    }
 
   async function mergeIssueData(data){
