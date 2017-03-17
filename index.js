@@ -17,22 +17,34 @@ module.exports = (robot) => {
      const github = await robot.auth(installation.id);
      // TODO: Pagination
      const data = await github.integrations.getInstallationRepositories({});
-     var coll_issues = {};
-     await data.repositories.map(async repo => {
-       const issues = await forRepository(github, repo);
-       await Object.keys(issues).map(async (label) =>{
-         if(!coll_issues[label]){
-           coll_issues[label] = issues[label];
-         }else{
-           coll_issues[label] = coll_issues[label].concat(issues[label]);
-         }
-       });
-     });
-     robot.log.info(coll_issues);
-     return coll_issues;
+     var coll_issues = [];
+     coll_issues = await Promise.all(data.repositories.map(async repo => {
+       var radar = await getRadarObj(github, repo);
+       const issues_for_repo = await radar.getIssuesWithLabel();
+       return issues_for_repo;
+     }));
+
+     var mergedIssues = await mergeIssueData(coll_issues);
+     var radar2 = new Radar(github, {});
+     robot.log.info(mergedIssues);
+     return mergedIssues;
    }
 
-  async function forRepository(github, repository) {
+  async function mergeIssueData(data){
+    var ret = {};
+    data.forEach(item =>{
+      Object.keys(item).map(async (label) => {
+        if(!ret[label]){
+          ret[label] = item[label];
+        }else{
+          ret[label] = ret[label].concat(item[label]);
+        }
+      });
+    });
+    return ret;
+  }
+
+  async function getRadarObj(github, repository) {
     const owner = repository.owner.login;
     const repo = repository.name;
     const path = '.github/radar.yml';
@@ -45,8 +57,6 @@ module.exports = (robot) => {
       config = {};
     }
     config = Object.assign(config, {owner, repo, logger: robot.log});
-    var radar = new Radar(github, config);
-    const issues_for_repo = await radar.getIssuesWithLabel();
-    return issues_for_repo;
+    return new Radar(github, config);
   }
 };
