@@ -35,7 +35,6 @@ module.exports = (robot) => {
      var radar2 = new Radar(github, config);
 
      var body = await radar2.generateRadarIssueBody(mergedIssues);
-     robot.log.info(body);
      var issue_created = await radar2.createRadarIssue(body);
      robot.log.info(issue_created);
      return body;
