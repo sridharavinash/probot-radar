@@ -1,8 +1,14 @@
 const yaml = require('js-yaml');
 const Radar = require('./lib/radar');
 
+// Check if we need to create a radar issue every 8 hrs
+const CHECK_INTERVAL = 60 * 60 * 1000 * 8;
+
 module.exports = (robot) => {
   check()
+
+  / Schedule interval to perform stale issue check
+  setInterval(check, CHECK_INTERVAL);
 
   async function check() {
     robot.log.info('Checking for open issues');
