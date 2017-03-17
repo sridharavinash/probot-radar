@@ -1,8 +1,24 @@
 # probot-radar
-[Under constrction :construction:]
 
 > a GitHub Integration built with [probot](https://github.com/probot/probot) that creates status update issues (radars).
 
+A bot that collates issues with labels and presents them in as a tracking issue in another repo (i.e `what's on my radar` like feature)
+
+## Configuration
+Adding a `.github/radar.yml` will override these defaults
+
+```
+#Number of days before closing a radar issue (not implemented yet!)
+days: 7
+
+#Issues with labels to collate
+labels: ['blocked','ready-for-review', 'tracking']
+
+#A separate repo to create the radar issues along with radar specfic labels
+radar:
+    repo: 'radar-repo'
+    labels: ['radar']
+```
 ## Setup
 ```
 # Install dependencies
