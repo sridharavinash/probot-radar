@@ -15,23 +15,30 @@ module.exports = (robot) => {
 
   async function checkInstallation(installation) {
      const github = await robot.auth(installation.id);
-     // TODO: Pagination
+     let config;
+
      const data = await github.integrations.getInstallationRepositories({});
+
      var coll_issues = [];
      coll_issues = await Promise.all(data.repositories.map(async repo => {
        var radar = await getRadarObj(github, repo);
+       if(!config){
+         config = await radar.getConfig();
+       }
        const issues_for_repo = await radar.getIssuesWithLabel();
        return issues_for_repo;
      }));
 
      var mergedIssues = await mergeIssueData(coll_issues);
-
+     robot.log.info(config);
      //HACK to get this to create a radar issue. Loses any yml set configs
-     var radar2 = new Radar(github, {logger: robot.log});
+     var radar2 = new Radar(github, config);
 
      var body = await radar2.generateRadarIssueBody(mergedIssues);
      robot.log.info(body);
-     return mergedIssues;
+     var issue_created = await radar2.createRadarIssue(body);
+     robot.log.info(issue_created);
+     return body;
    }
 
   async function mergeIssueData(data){
