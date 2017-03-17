@@ -3,7 +3,7 @@
 > a GitHub Integration built with [probot](https://github.com/probot/probot) that creates status update issues (radars).
 
 A bot that collates issues with labels and presents them in as a tracking issue in another repo (i.e `what's on my radar` like feature)
-
+![probot-radar](screenshot.png)
 ## Configuration
 Adding a `.github/radar.yml` will override these defaults
 
