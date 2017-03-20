@@ -5,11 +5,11 @@
   "author": "Avinash Sridhar",
   "private": true,
   "scripts": {
-    "start": "probot ./index.js"
+    "start": "probot run ./index.js"
   },
   "dependencies": {
     "js-yaml": "^3.8.2",
-    "probot": "probot/probot"
+    "probot": "~0.2.0"
   },
   "engines": {
     "node": ">= 7.7.0",
